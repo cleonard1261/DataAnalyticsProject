@@ -10,18 +10,21 @@ df['row_ind'] = 1
 
 x = list(df['SERVICEORDERDATE'])
 
+def create_key(f):
+    date_key = int(str(parser.parse(f).date()).replace('-',''))
+    return date_key
 
-for y in x:
-	dt = str(parser.parse(y).date())
 
-df['date_key'] = dt.replace('-','')
+df['date_key'] = df['SERVICEORDERDATE'].map(create_key)
+
+print df[['SERVICEORDERDATE','date_key' ]][2230:]
 
 
 #print df.columns
 
 grouped = df.groupby(['SERVICECODE', 'date_key']).row_ind.sum()
 
-print grouped
+#print grouped
 
 #x = df['SERVICEORDERDATE'][1:].split(' ',0)
 
